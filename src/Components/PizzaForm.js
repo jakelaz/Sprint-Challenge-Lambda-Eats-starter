@@ -29,7 +29,6 @@ const PizzaForm = props => {
             toppings.splice(index, 1);
         }
         setToppings([...toppings]);
-        console.log(toppings)
         setFormState({
             ...formState,
             toppings: toppings
@@ -40,7 +39,6 @@ const PizzaForm = props => {
 
     const handleChange = e => {
         e.persist();
-        console.log(formState)
         Yup
             .reach(schema, e.target.name)
             //we can then run validate using the value
@@ -90,15 +88,12 @@ const PizzaForm = props => {
         schema
             .isValid(formState)
             .then(function(valid) {
-                console.log("valid", valid); // => true
                 props.handleSetNewPizza(formState)
             });
     };
 
     useEffect(() => {
-        console.log(formState)
         schema.isValid(formState).then(valid => {
-            // console.log(valid);
             setButtonDisabled(!valid);
         });
     }, [formState]);

@@ -3,6 +3,8 @@ import { Route } from 'react-router-dom';
 
 import PizzaForm from './Components/PizzaForm';
 
+import axios from 'axios';
+
 import { Nav, NavItem, NavLink } from 'reactstrap';
 
 
@@ -10,10 +12,17 @@ const App = () => {
   const [pizzas, setPizzas] = useState([]);
   
   const handleSetNewPizza = (newPizza) =>{
-    console.log("newPizza",newPizza)
-    setPizzas([...pizzas, newPizza])
- 
+    axios
+      .post("https://reqres.in/api/unknown", newPizza)
+      .then(res => {
+        
+        setPizzas([...pizzas, res.data])
+        
+      })
+      .catch(err => console.log(err.response));    
   }
+
+  console.log("success pizza", pizzas);
 
   return (
     <div className="appWrapper">
